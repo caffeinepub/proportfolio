@@ -16,8 +16,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Bricolage Grotesque", "sans-serif"],
-        body: ["Mona Sans", "sans-serif"],
+        display: ['Bricolage Grotesque', 'sans-serif'],
+        body: ['Figtree', 'sans-serif'],
       },
       colors: {
         border: "oklch(var(--border))",
@@ -79,8 +79,7 @@ export default {
       boxShadow: {
         xs: "0 1px 2px 0 rgba(0,0,0,0.05)",
         card: "0 1px 3px 0 rgba(0,0,0,0.07), 0 1px 2px -1px rgba(0,0,0,0.07)",
-        "card-hover": "0 4px 12px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.08)",
-        "apple-lift": "0 20px 60px 0 rgba(0,0,0,0.18), 0 4px 16px 0 rgba(0,0,0,0.1)",
+        "card-hover": "0 4px 12px 0 rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
       },
       keyframes: {
         "accordion-down": {

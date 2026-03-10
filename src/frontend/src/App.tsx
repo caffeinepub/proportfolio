@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
 import { AboutSection } from "./components/AboutSection";
 import { EducationSection } from "./components/EducationSection";
@@ -13,16 +14,28 @@ import { SAMPLE_PORTFOLIO } from "./sampleData";
 function LoadingSkeleton() {
   return (
     <div
-      className="min-h-screen apple-dark flex items-center justify-center"
+      className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 space-y-6"
       data-ocid="app.loading_state"
     >
-      <div className="flex flex-col items-center gap-6">
-        <div className="w-20 h-20 rounded-full bg-white/10 animate-pulse" />
-        <div className="space-y-3 text-center">
-          <div className="h-8 w-48 bg-white/10 rounded-full animate-pulse mx-auto" />
-          <div className="h-4 w-32 bg-white/10 rounded-full animate-pulse mx-auto" />
+      <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-card">
+        <Skeleton className="h-40 w-full" />
+        <div className="p-6 space-y-3">
+          <Skeleton className="h-10 w-10 rounded-full -mt-12" />
+          <Skeleton className="h-6 w-48" />
+          <Skeleton className="h-4 w-36" />
+          <Skeleton className="h-4 w-64" />
         </div>
       </div>
+      {[1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="bg-card rounded-xl border border-border p-6 space-y-3 shadow-card"
+        >
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-3/4" />
+        </div>
+      ))}
     </div>
   );
 }
@@ -33,44 +46,38 @@ export default function App() {
 
   const displayPortfolio = portfolio ?? SAMPLE_PORTFOLIO;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen">
-        <LoadingSkeleton />
-        <Toaster richColors position="bottom-right" />
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen bg-background">
       <Navbar profileName={displayPortfolio.profile.name} />
 
-      <main>
-        {/* Hero — dark */}
-        <ProfileHeader profile={displayPortfolio.profile} isAdmin={isAdmin} />
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        <main>
+          <ProfileHeader profile={displayPortfolio.profile} isAdmin={isAdmin} />
 
-        {/* About — white */}
-        <AboutSection bio={displayPortfolio.profile.bio} />
+          <div className="space-y-2">
+            <AboutSection bio={displayPortfolio.profile.bio} />
 
-        {/* Experience — light gray */}
-        <ExperienceSection
-          experiences={displayPortfolio.workExperience}
-          isAdmin={isAdmin}
-        />
+            <ExperienceSection
+              experiences={displayPortfolio.workExperience}
+              isAdmin={isAdmin}
+            />
 
-        {/* Education — white */}
-        <EducationSection
-          education={displayPortfolio.education}
-          isAdmin={isAdmin}
-        />
+            <EducationSection
+              education={displayPortfolio.education}
+              isAdmin={isAdmin}
+            />
 
-        {/* Skills — dark */}
-        <SkillsSection skills={displayPortfolio.skills} isAdmin={isAdmin} />
+            <SkillsSection skills={displayPortfolio.skills} isAdmin={isAdmin} />
 
-        {/* Hobbies — white */}
-        <HobbiesSection hobbies={displayPortfolio.hobbies} isAdmin={isAdmin} />
-      </main>
+            <HobbiesSection
+              hobbies={displayPortfolio.hobbies}
+              isAdmin={isAdmin}
+            />
+          </div>
+        </main>
+      )}
 
       <Footer />
       <Toaster richColors position="bottom-right" />

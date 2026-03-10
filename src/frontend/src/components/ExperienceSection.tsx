@@ -10,9 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react";
-import { motion, useInView } from "motion/react";
-import { useRef, useState } from "react";
+import { Briefcase, Loader2, Pencil, Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 import type { WorkExperience } from "../backend.d";
 import {
@@ -20,6 +19,7 @@ import {
   useRemoveWorkExperience,
   useUpdateWorkExperience,
 } from "../hooks/useQueries";
+import { SectionWrapper } from "./SectionWrapper";
 
 interface Props {
   experiences: WorkExperience[];
@@ -156,183 +156,127 @@ export function ExperienceSection({ experiences, isAdmin }: Props) {
   const addExp = useAddWorkExperience();
   const updateExp = useUpdateWorkExperience();
   const removeExp = useRemoveWorkExperience();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
 
   const formatYear = (ts: bigint) => {
     const n = Number(ts);
-    if (n > 2100 || n < 1900)
+    if (n > 2100 || n < 1900) {
       return new Date(n / 1_000_000).getFullYear().toString();
+    }
     return n.toString();
   };
 
-  const itemVariants: any = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: i * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
-    }),
-  };
-
   return (
-    <section id="experience" className="apple-gray">
-      <div
-        className="max-w-[980px] mx-auto px-6 md:px-12 py-24 md:py-32"
-        ref={ref}
-      >
-        <span className="text-xs font-semibold tracking-[0.18em] uppercase text-foreground/30 mb-4 block">
-          Experience
-        </span>
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex items-end justify-between mb-14"
-        >
-          <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight leading-none text-foreground">
-            Experience
-          </h2>
-          {isAdmin && (
-            <ExperienceModal
-              initial={EMPTY_EXP}
-              onSave={(e) =>
-                addExp.mutate(e, {
-                  onSuccess: () => toast.success("Experience added"),
-                  onError: () => toast.error("Failed to add experience"),
-                })
-              }
-              isPending={addExp.isPending}
-              ocidPrefix="experience.add"
-              trigger={
-                <Button
-                  size="sm"
-                  data-ocid="experience.add.open_modal_button"
-                  className="gap-1.5"
-                >
-                  <Plus className="h-3.5 w-3.5" /> Add
-                </Button>
-              }
-            />
-          )}
-        </motion.div>
-
-        {/* Timeline */}
-        <div className="relative pl-8 md:pl-0">
-          {experiences.map((exp, idx) => (
-            <motion.div
-              key={`${exp.company}-${idx}`}
-              custom={idx}
-              variants={itemVariants}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              data-ocid={`experience.item.${idx + 1}`}
-              className="relative md:grid md:grid-cols-[160px_1fr] gap-10 mb-12 last:mb-0"
-            >
-              {/* Year column */}
-              <div className="hidden md:block">
-                <span
-                  className="font-display font-bold text-4xl leading-none"
-                  style={{ color: "oklch(0.82 0 0)" }}
-                >
-                  {formatYear(exp.startDate)}
-                </span>
-                <p className="text-xs mt-1" style={{ color: "oklch(0.6 0 0)" }}>
-                  – {exp.endDate ? formatYear(exp.endDate) : "Present"}
-                </p>
+    <SectionWrapper
+      id="experience"
+      title="Experience"
+      action={
+        isAdmin ? (
+          <ExperienceModal
+            initial={EMPTY_EXP}
+            onSave={(e) => {
+              addExp.mutate(e, {
+                onSuccess: () => toast.success("Experience added"),
+                onError: () => toast.error("Failed to add experience"),
+              });
+            }}
+            isPending={addExp.isPending}
+            ocidPrefix="experience.add"
+            trigger={
+              <Button
+                size="sm"
+                data-ocid="experience.add.open_modal_button"
+                className="gap-1.5"
+              >
+                <Plus className="h-3.5 w-3.5" /> Add
+              </Button>
+            }
+          />
+        ) : undefined
+      }
+    >
+      <div className="space-y-4">
+        {experiences.map((exp, idx) => (
+          <div
+            key={`${exp.company}-${idx}`}
+            data-ocid={`experience.item.${idx + 1}`}
+            className="bg-card rounded-xl shadow-card border border-border p-6 hover:shadow-card-hover transition-shadow"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Briefcase className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-foreground">
+                    {exp.role}
+                  </h3>
+                  <p className="text-primary font-semibold text-sm">
+                    {exp.company}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {formatYear(exp.startDate)} –{" "}
+                    {exp.endDate ? formatYear(exp.endDate) : "Present"}
+                  </p>
+                </div>
               </div>
-
-              {/* Content */}
-              <div className="border-t border-border pt-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-foreground leading-tight">
-                      {exp.role}
-                    </h3>
-                    <p
-                      className="text-sm font-medium mt-0.5"
-                      style={{ color: "oklch(0.47 0 0)" }}
-                    >
-                      {exp.company}
-                    </p>
-                    <p
-                      className="text-xs mt-0.5 md:hidden"
-                      style={{ color: "oklch(0.6 0 0)" }}
-                    >
-                      {formatYear(exp.startDate)} –{" "}
-                      {exp.endDate ? formatYear(exp.endDate) : "Present"}
-                    </p>
-                  </div>
-                  {isAdmin && (
-                    <div className="flex gap-1 flex-shrink-0">
-                      <ExperienceModal
-                        initial={exp}
-                        onSave={(e) =>
-                          updateExp.mutate(
-                            { id: BigInt(idx), entry: e },
-                            {
-                              onSuccess: () =>
-                                toast.success("Experience updated"),
-                              onError: () => toast.error("Failed to update"),
-                            },
-                          )
-                        }
-                        isPending={updateExp.isPending}
-                        ocidPrefix={`experience.edit.${idx + 1}`}
-                        trigger={
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7"
-                            data-ocid={`experience.edit_button.${idx + 1}`}
-                          >
-                            <Pencil className="h-3.5 w-3.5" />
-                          </Button>
-                        }
-                      />
+              {isAdmin && (
+                <div className="flex gap-1 flex-shrink-0">
+                  <ExperienceModal
+                    initial={exp}
+                    onSave={(e) =>
+                      updateExp.mutate(
+                        { id: BigInt(idx), entry: e },
+                        {
+                          onSuccess: () => toast.success("Experience updated"),
+                          onError: () => toast.error("Failed to update"),
+                        },
+                      )
+                    }
+                    isPending={updateExp.isPending}
+                    ocidPrefix={`experience.edit.${idx + 1}`}
+                    trigger={
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        data-ocid={`experience.delete_button.${idx + 1}`}
-                        onClick={() =>
-                          removeExp.mutate(BigInt(idx), {
-                            onSuccess: () =>
-                              toast.success("Experience removed"),
-                            onError: () => toast.error("Failed to remove"),
-                          })
-                        }
+                        className="h-7 w-7"
+                        data-ocid={`experience.edit_button.${idx + 1}`}
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        <Pencil className="h-3.5 w-3.5" />
                       </Button>
-                    </div>
-                  )}
+                    }
+                  />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 text-destructive hover:text-destructive"
+                    data-ocid={`experience.delete_button.${idx + 1}`}
+                    onClick={() =>
+                      removeExp.mutate(BigInt(idx), {
+                        onSuccess: () => toast.success("Experience removed"),
+                        onError: () => toast.error("Failed to remove"),
+                      })
+                    }
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
                 </div>
-                <p
-                  className="mt-3 text-sm leading-relaxed"
-                  style={{ color: "oklch(0.47 0 0)" }}
-                >
-                  {exp.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-
-          {experiences.length === 0 && (
-            <div
-              data-ocid="experience.empty_state"
-              className="text-center py-16 text-muted-foreground border border-dashed border-border rounded-xl"
-            >
-              <p className="text-sm">No work experience added yet.</p>
+              )}
             </div>
-          )}
-        </div>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed ml-14">
+              {exp.description}
+            </p>
+          </div>
+        ))}
+        {experiences.length === 0 && (
+          <div
+            data-ocid="experience.empty_state"
+            className="text-center py-12 text-muted-foreground bg-card rounded-xl border border-dashed border-border"
+          >
+            <Briefcase className="h-8 w-8 mx-auto mb-3 opacity-30" />
+            <p>No work experience added yet.</p>
+          </div>
+        )}
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

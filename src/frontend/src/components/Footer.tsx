@@ -5,28 +5,19 @@ export function Footer() {
   const utm = `utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(hostname)}`;
 
   return (
-    <footer style={{ backgroundColor: "oklch(0.11 0 0)" }}>
-      <div
-        className="max-w-[980px] mx-auto px-6 md:px-12 py-10"
-        style={{ borderTop: "1px solid oklch(0.2 0 0)" }}
-      >
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: "oklch(0.4 0 0)" }}>
-            © {year} ProPortfolio. All rights reserved.
-          </p>
-          <p className="text-xs" style={{ color: "oklch(0.4 0 0)" }}>
-            Built with <span style={{ color: "oklch(0.6 0 0)" }}>♥</span> using{" "}
-            <a
-              href={`https://caffeine.ai?${utm}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-white"
-              style={{ color: "oklch(0.65 0 0)" }}
-            >
-              caffeine.ai
-            </a>
-          </p>
-        </div>
+    <footer className="border-t border-border bg-card mt-12">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <p className="text-center text-sm text-muted-foreground">
+          © {year}. Built with <span className="text-destructive">♥</span> using{" "}
+          <a
+            href={`https://caffeine.ai?${utm}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline font-medium"
+          >
+            caffeine.ai
+          </a>
+        </p>
       </div>
     </footer>
   );

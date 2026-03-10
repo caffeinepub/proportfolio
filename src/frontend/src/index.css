@@ -7,8 +7,8 @@
 }
 
 @font-face {
-  font-family: "Mona Sans";
-  src: url("/assets/fonts/MonaSans.woff2") format("woff2");
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -20,41 +20,40 @@
 
 @layer base {
   :root {
-    /* Apple-inspired monochromatic palette */
-    --background: 1 0 0;
-    --foreground: 0.13 0 0;
-    --card: 0.97 0 0;
-    --card-foreground: 0.13 0 0;
+    --background: 0.98 0.003 240;
+    --foreground: 0.18 0.04 255;
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.04 255;
     --popover: 1 0 0;
-    --popover-foreground: 0.13 0 0;
-    --primary: 0.13 0 0;
-    --primary-foreground: 1 0 0;
-    --secondary: 0.95 0 0;
-    --secondary-foreground: 0.13 0 0;
-    --muted: 0.95 0 0;
-    --muted-foreground: 0.47 0 0;
-    --accent: 0.47 0 0;
-    --accent-foreground: 1 0 0;
+    --popover-foreground: 0.18 0.04 255;
+    --primary: 0.28 0.09 255;
+    --primary-foreground: 0.98 0.003 240;
+    --secondary: 0.93 0.02 240;
+    --secondary-foreground: 0.28 0.09 255;
+    --muted: 0.94 0.01 240;
+    --muted-foreground: 0.5 0.04 240;
+    --accent: 0.58 0.13 195;
+    --accent-foreground: 0.98 0.003 240;
     --destructive: 0.55 0.2 27;
-    --destructive-foreground: 1 0 0;
-    --border: 0.9 0 0;
-    --input: 0.88 0 0;
-    --ring: 0.13 0 0;
+    --destructive-foreground: 0.98 0.003 240;
+    --border: 0.88 0.02 240;
+    --input: 0.88 0.02 240;
+    --ring: 0.28 0.09 255;
     --radius: 0.75rem;
     --gold: 0.78 0.15 85;
-    --chart-1: 0.13 0 0;
-    --chart-2: 0.47 0 0;
-    --chart-3: 0.7 0 0;
-    --chart-4: 0.85 0 0;
+    --chart-1: 0.28 0.09 255;
+    --chart-2: 0.58 0.13 195;
+    --chart-3: 0.68 0.15 150;
+    --chart-4: 0.75 0.12 85;
     --chart-5: 0.55 0.2 27;
-    --sidebar: 1 0 0;
-    --sidebar-foreground: 0.13 0 0;
-    --sidebar-primary: 0.13 0 0;
-    --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.95 0 0;
-    --sidebar-accent-foreground: 0.13 0 0;
-    --sidebar-border: 0.9 0 0;
-    --sidebar-ring: 0.13 0 0;
+    --sidebar: 0.98 0.003 240;
+    --sidebar-foreground: 0.18 0.04 255;
+    --sidebar-primary: 0.28 0.09 255;
+    --sidebar-primary-foreground: 0.98 0.003 240;
+    --sidebar-accent: 0.93 0.02 240;
+    --sidebar-accent-foreground: 0.28 0.09 255;
+    --sidebar-border: 0.88 0.02 240;
+    --sidebar-ring: 0.28 0.09 255;
   }
 
   * {
@@ -83,75 +82,55 @@
 }
 
 @layer utilities {
-  /* Apple section variants */
-  .apple-dark {
-    background-color: oklch(0.11 0 0);
-    color: oklch(1 0 0);
+  .skill-progress-bar {
+    background: linear-gradient(
+      to right,
+      oklch(0.28 0.09 255),
+      oklch(0.58 0.13 195)
+    );
   }
 
-  .apple-light {
-    background-color: oklch(1 0 0);
-    color: oklch(0.13 0 0);
+  .skill-progress-bar-achieved {
+    background: linear-gradient(
+      to right,
+      oklch(0.58 0.13 195),
+      oklch(0.65 0.15 150)
+    );
   }
 
-  .apple-gray {
-    background-color: oklch(0.97 0 0);
-    color: oklch(0.13 0 0);
+  .hero-mesh {
+    background: radial-gradient(
+        ellipse at 20% 50%,
+        oklch(0.28 0.09 255 / 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 80% 20%,
+        oklch(0.58 0.13 195 / 0.06) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 60% 80%,
+        oklch(0.28 0.09 255 / 0.05) 0%,
+        transparent 40%
+      ), oklch(0.98 0.003 240);
   }
 
-  /* Frosted glass for navbar */
-  .apple-nav-scrolled {
-    background-color: oklch(1 0 0 / 0.8);
-    backdrop-filter: blur(20px) saturate(1.8);
-    -webkit-backdrop-filter: blur(20px) saturate(1.8);
-    border-bottom: 1px solid oklch(0.9 0 0);
+  .section-fade-in {
+    animation: fadeInUp 0.6s ease-out both;
   }
 
-  .apple-nav-dark-scrolled {
-    background-color: oklch(0.11 0 0 / 0.85);
-    backdrop-filter: blur(20px) saturate(1.8);
-    -webkit-backdrop-filter: blur(20px) saturate(1.8);
-    border-bottom: 1px solid oklch(0.25 0 0);
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  /* Skill arc SVG */
-  .skill-arc-bg {
-    stroke: oklch(0.25 0 0);
-  }
-
-  .skill-arc-fg {
-    stroke: oklch(0.88 0 0);
-    transition: stroke-dashoffset 1s ease-out;
-  }
-
-  .skill-arc-fg-achieved {
-    stroke: oklch(var(--gold));
-    transition: stroke-dashoffset 1s ease-out;
-  }
-
-  /* Snap scroll for mobile hobbies */
-  .snap-x-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 1rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .snap-x-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  .snap-x-item {
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    width: 80vw;
-    max-width: 320px;
-  }
-
-  /* Gold badge */
   .gold-badge {
     color: oklch(var(--gold));
   }
@@ -159,40 +138,5 @@
   .gold-bg {
     background-color: oklch(var(--gold) / 0.1);
     border-color: oklch(var(--gold) / 0.3);
-  }
-
-  /* Sticky section label */
-  .section-sticky-label {
-    position: sticky;
-    top: 5rem;
-    align-self: flex-start;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 600;
-    opacity: 0.45;
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* Skill progress bar (for fallback) */
-  .skill-progress-bar {
-    background: oklch(0.88 0 0);
-  }
-
-  .skill-progress-bar-achieved {
-    background: oklch(var(--gold));
-  }
-
-  /* Timeline line */
-  .timeline-line {
-    border-left: 1px solid oklch(0.85 0 0);
-  }
-
-  .timeline-line-dark {
-    border-left: 1px solid oklch(0.25 0 0);
   }
 }

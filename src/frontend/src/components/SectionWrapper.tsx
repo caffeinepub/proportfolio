@@ -6,56 +6,31 @@ interface Props {
   title: string;
   children: React.ReactNode;
   action?: React.ReactNode;
-  dark?: boolean;
-  gray?: boolean;
 }
 
-export function SectionWrapper({
-  id,
-  title,
-  children,
-  action,
-  dark = false,
-  gray = false,
-}: Props) {
+export function SectionWrapper({ id, title, children, action }: Props) {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
-
-  const bg = dark ? "apple-dark" : gray ? "apple-gray" : "apple-light";
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   return (
-    <section id={id} ref={ref} className={`${bg} relative`}>
-      <div className="max-w-[980px] mx-auto px-6 md:px-12 py-24 md:py-32">
-        {/* Section label — sticky pill */}
-        <div className="mb-4">
-          <span
-            className={`text-xs font-semibold tracking-[0.18em] uppercase ${
-              dark ? "text-white/40" : "text-foreground/30"
-            }`}
-          >
-            {title}
-          </span>
-        </div>
-
-        {/* Headline row */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex items-end justify-between mb-14 scroll-mt-20"
-        >
-          <h2
-            className={`font-display font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight leading-none ${
-              dark ? "text-white" : "text-foreground"
-            }`}
-          >
+    <section
+      id={id}
+      ref={ref}
+      className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 scroll-mt-20"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-xl font-bold text-foreground border-b-2 border-primary pb-1">
             {title}
           </h2>
-          {action && <div className="ml-4 flex-shrink-0">{action}</div>}
-        </motion.div>
-
+          {action}
+        </div>
         {children}
-      </div>
+      </motion.div>
     </section>
   );
 }
