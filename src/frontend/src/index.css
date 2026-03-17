@@ -1,18 +1,4 @@
-@font-face {
-  font-family: "Bricolage Grotesque";
-  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Figtree";
-  src: url("/assets/fonts/Figtree.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -20,40 +6,39 @@
 
 @layer base {
   :root {
-    --background: 0.98 0.003 240;
-    --foreground: 0.18 0.04 255;
+    --background: 1 0 0;
+    --foreground: 0.13 0.02 255;
     --card: 1 0 0;
-    --card-foreground: 0.18 0.04 255;
+    --card-foreground: 0.13 0.02 255;
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.04 255;
-    --primary: 0.28 0.09 255;
-    --primary-foreground: 0.98 0.003 240;
-    --secondary: 0.93 0.02 240;
-    --secondary-foreground: 0.28 0.09 255;
-    --muted: 0.94 0.01 240;
-    --muted-foreground: 0.5 0.04 240;
-    --accent: 0.58 0.13 195;
-    --accent-foreground: 0.98 0.003 240;
+    --popover-foreground: 0.13 0.02 255;
+    --primary: 0.59 0.18 22;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.96 0.005 240;
+    --secondary-foreground: 0.13 0.02 255;
+    --muted: 0.96 0.005 240;
+    --muted-foreground: 0.45 0.02 240;
+    --accent: 0.59 0.18 22;
+    --accent-foreground: 1 0 0;
     --destructive: 0.55 0.2 27;
-    --destructive-foreground: 0.98 0.003 240;
-    --border: 0.88 0.02 240;
-    --input: 0.88 0.02 240;
-    --ring: 0.28 0.09 255;
-    --radius: 0.75rem;
-    --gold: 0.78 0.15 85;
-    --chart-1: 0.28 0.09 255;
-    --chart-2: 0.58 0.13 195;
-    --chart-3: 0.68 0.15 150;
-    --chart-4: 0.75 0.12 85;
-    --chart-5: 0.55 0.2 27;
-    --sidebar: 0.98 0.003 240;
-    --sidebar-foreground: 0.18 0.04 255;
-    --sidebar-primary: 0.28 0.09 255;
-    --sidebar-primary-foreground: 0.98 0.003 240;
-    --sidebar-accent: 0.93 0.02 240;
-    --sidebar-accent-foreground: 0.28 0.09 255;
-    --sidebar-border: 0.88 0.02 240;
-    --sidebar-ring: 0.28 0.09 255;
+    --destructive-foreground: 1 0 0;
+    --border: 0.91 0.01 240;
+    --input: 0.91 0.01 240;
+    --ring: 0.59 0.18 22;
+    --radius: 0.5rem;
+    --chart-1: 0.59 0.18 22;
+    --chart-2: 0.5 0.15 200;
+    --chart-3: 0.6 0.15 150;
+    --chart-4: 0.7 0.12 85;
+    --chart-5: 0.4 0.18 280;
+    --sidebar: 0.98 0.005 240;
+    --sidebar-foreground: 0.13 0.02 255;
+    --sidebar-primary: 0.59 0.18 22;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.96 0.005 240;
+    --sidebar-accent-foreground: 0.13 0.02 255;
+    --sidebar-border: 0.91 0.01 240;
+    --sidebar-ring: 0.59 0.18 22;
   }
 
   * {
@@ -83,47 +68,25 @@
 
 @layer utilities {
   .skill-progress-bar {
-    background: linear-gradient(
-      to right,
-      oklch(0.28 0.09 255),
-      oklch(0.58 0.13 195)
-    );
+    background: oklch(0.59 0.18 22);
   }
 
   .skill-progress-bar-achieved {
-    background: linear-gradient(
-      to right,
-      oklch(0.58 0.13 195),
-      oklch(0.65 0.15 150)
-    );
+    background: oklch(0.48 0.16 22);
   }
 
   .hero-mesh {
-    background: radial-gradient(
-        ellipse at 20% 50%,
-        oklch(0.28 0.09 255 / 0.08) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        ellipse at 80% 20%,
-        oklch(0.58 0.13 195 / 0.06) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        ellipse at 60% 80%,
-        oklch(0.28 0.09 255 / 0.05) 0%,
-        transparent 40%
-      ), oklch(0.98 0.003 240);
+    background: oklch(1 0 0);
   }
 
   .section-fade-in {
-    animation: fadeInUp 0.6s ease-out both;
+    animation: fadeInUp 0.4s ease-out both;
   }
 
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(16px);
     }
     to {
       opacity: 1;
@@ -132,11 +95,11 @@
   }
 
   .gold-badge {
-    color: oklch(var(--gold));
+    color: oklch(0.7 0.15 85);
   }
 
   .gold-bg {
-    background-color: oklch(var(--gold) / 0.1);
-    border-color: oklch(var(--gold) / 0.3);
+    background-color: oklch(0.7 0.15 85 / 0.1);
+    border-color: oklch(0.7 0.15 85 / 0.3);
   }
 }

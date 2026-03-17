@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { LogIn, LogOut, User } from "lucide-react";
-import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 
@@ -40,37 +39,32 @@ export function Navbar({ profileName }: { profileName: string }) {
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -64, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-card/95 backdrop-blur-sm shadow-card border-b border-border"
-          : "bg-card/80 backdrop-blur-sm"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-200 ${
+        scrolled ? "shadow-[0_1px_0_0_rgba(0,0,0,0.08)]" : ""
       }`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             data-ocid="nav.link"
-            className="font-display font-bold text-xl text-primary hover:opacity-80 transition-opacity cursor-pointer bg-transparent border-none p-0"
+            className="font-semibold text-lg text-foreground hover:text-primary transition-colors cursor-pointer bg-transparent border-none p-0"
           >
             {profileName || "Portfolio"}
           </button>
 
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-0">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 data-ocid={`nav.${link.label.toLowerCase()}.link`}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-3 py-4 text-sm font-medium transition-colors border-b-2 ${
                   activeSection === link.href.slice(1)
-                    ? "text-primary bg-primary/5"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "text-primary border-primary"
+                    : "text-muted-foreground border-transparent hover:text-foreground hover:border-border"
                 }`}
               >
                 {link.label}
@@ -92,7 +86,7 @@ export function Navbar({ profileName }: { profileName: string }) {
                   size="sm"
                   onClick={clear}
                   data-ocid="nav.logout.button"
-                  className="gap-1.5"
+                  className="gap-1.5 text-sm"
                 >
                   <LogOut className="h-3.5 w-3.5" />
                   Sign Out
@@ -100,11 +94,12 @@ export function Navbar({ profileName }: { profileName: string }) {
               </div>
             ) : (
               <Button
+                variant="outline"
                 size="sm"
                 onClick={login}
                 disabled={isLoggingIn}
                 data-ocid="nav.login.button"
-                className="gap-1.5"
+                className="gap-1.5 text-sm"
               >
                 <LogIn className="h-3.5 w-3.5" />
                 {isLoggingIn ? "Signing in..." : "Sign In"}
@@ -113,6 +108,6 @@ export function Navbar({ profileName }: { profileName: string }) {
           </div>
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }

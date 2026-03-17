@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -46,23 +45,23 @@ export function ProfileHeader({ profile, isAdmin }: Props) {
     .toUpperCase();
 
   return (
-    <section className="hero-mesh pt-24 pb-8">
+    <section className="pt-16 bg-background">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-card rounded-2xl shadow-card border border-border overflow-hidden"
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="bg-card rounded-lg shadow-card border border-border overflow-hidden"
         >
-          {/* Cover Banner */}
-          <div className="h-32 sm:h-40 bg-gradient-to-r from-primary to-accent relative" />
+          {/* Cover Banner — flat neutral strip */}
+          <div className="h-24 sm:h-32 bg-muted" />
 
-          <div className="px-6 pb-6">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 -mt-12 sm:-mt-16">
+          <div className="px-6 pb-6 flex flex-col items-center text-center">
+            <div className="flex flex-col items-center gap-3 -mt-10 sm:-mt-14">
               {/* Avatar */}
-              <Avatar className="h-24 w-24 sm:h-32 sm:w-32 ring-4 ring-card shadow-lg flex-shrink-0">
+              <Avatar className="h-20 w-20 sm:h-28 sm:w-28 ring-4 ring-card shadow-sm flex-shrink-0">
                 <AvatarImage src={profile.avatarUrl} alt={profile.name} />
-                <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-display font-bold">
+                <AvatarFallback className="bg-secondary text-foreground text-2xl font-semibold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -74,7 +73,7 @@ export function ProfileHeader({ profile, isAdmin }: Props) {
                       variant="outline"
                       size="sm"
                       data-ocid="profile.edit_button"
-                      className="gap-1.5 self-start sm:self-auto mt-2 sm:mt-0"
+                      className="gap-1.5"
                       onClick={() => setForm(profile)}
                     >
                       <Pencil className="h-3.5 w-3.5" />
@@ -156,15 +155,15 @@ export function ProfileHeader({ profile, isAdmin }: Props) {
               )}
             </div>
 
-            <div className="mt-4">
-              <h1 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+            <div className="mt-4 flex flex-col items-center">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight">
                 {profile.name}
               </h1>
-              <p className="text-muted-foreground font-medium mt-1">
+              <p className="text-muted-foreground font-medium mt-1 text-sm">
                 {profile.title}
               </p>
 
-              <div className="flex flex-wrap items-center gap-3 mt-3">
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-3">
                 {profile.location && (
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <MapPin className="h-3.5 w-3.5" />
